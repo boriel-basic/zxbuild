@@ -1,0 +1,63 @@
+#!/bin/bash
+
+BRANCH="$1"
+ZXBDIST=zxbasic
+set -ue
+
+if [[ "$BRANCH" == "" ]]; then
+    BRANCH=$(git symbolic-ref --short HEAD)
+fi
+
+echo Crating release on branch $BRANCH
+
+if [[ ! -d "$ZXBDIST" ]]; then
+    git clone git@bitbucket.org:zxbasic/zxbasic.git "$ZXBDIST"
+fi
+
+cd "$ZXBDIST"
+git checkout $BRANCH
+git pull origin $BRANCH
+cd ..
+
+RELEASE=$(cat $ZXBDIST/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')
+echo $RELEASE
+
+rsync -au $ZXBDIST dist
+
+cd dist/$ZXBDIST
+./zxb.py --version
+cd ..
+rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/__pycache__
+find $ZXBDIST -type d -name ".*" -exec rm -rf {} \; 2>/dev/null || true
+find $ZXBDIST -type d -name ".*" -delete
+
+tar -zcf zxbasic.tar.gz $ZXBDIST
+zip -9qr zxbasic.zip $ZXBDIST
+
+mv zxbasic.zip zxbasic-$RELEASE.zip
+mv zxbasic.tar.gz zxbasic-$RELEASE.tar.gz
+
+#cd ../$ZXBDIST
+#docker run -v "$(pwd):/src/" cdrx/pyinstaller-windows 
+#cd ..
+#mv $ZXBDIST/dist/windows dist
+#cp dist/windows/zxb{asm,pp}/*.exe dist/windows/zxb
+#mv dist/zxbasic/{parsetab,library*,examples} dist/windows/zxb
+#rm -rf dist/zxbasic
+#mv dist/windows/zxb dist/windows/zxbasic
+
+#pushd dist/windows
+#zip -9qr zxbasic-$RELEASE-win32.zip zxbasic
+#popd
+#mv -f dist/windows/zxbasic-$RELEASE-win32.zip dist
+#rm -rf dist/windows
+
+cd ..
+cp -af win32/* dist/zxbasic
+cd dist
+zip -9qr zxbasic-$RELEASE-win32.zip zxbasic
+rm -rf zxbasic
+
+echo Uploading...
+scp zxbasic-$RELEASE* boriel@boriel.com:/var/www/boriel.com/web/files/zxb
+
