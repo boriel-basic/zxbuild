@@ -15,6 +15,7 @@ if [[ ! -d "$ZXBDIST" ]]; then
 fi
 
 cd "$ZXBDIST"
+git fetch origin $BRANCH
 git checkout $BRANCH
 git pull origin $BRANCH
 cd ..
