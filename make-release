@@ -26,6 +26,16 @@ echo $RELEASE
 rsync -au $ZXBDIST dist
 
 cd dist/$ZXBDIST
+
+# remove some unneeded files
+rm -f *.{ini,spec,yml} setup.py
+
+# copy needed modules (ply, six, ...)
+MOD_DIR=../../modules
+for f in $(cat ${MOD_DIR}/MANIFEST); do
+    cp -va ${MOD_DIR}/$f .
+done
+
 ./zxb.py --version
 cd ..
 rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/__pycache__
