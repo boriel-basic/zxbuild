@@ -8,7 +8,7 @@ if [[ "$BRANCH" == "" ]]; then
     BRANCH=$(git symbolic-ref --short HEAD)
 fi
 
-echo Crating release on branch $BRANCH
+echo Creating release on branch $BRANCH
 
 if [[ ! -d "$ZXBDIST" ]]; then
     git clone git@bitbucket.org:zxbasic/zxbasic.git "$ZXBDIST"
