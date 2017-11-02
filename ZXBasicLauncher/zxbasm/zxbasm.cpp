@@ -7,7 +7,7 @@
 #include <windows.h>
 
 #define TARGET "zxbasm.py"
-#define PYTHON_DIR "python35"
+#define PYTHON_DIR "python36"
 
 using namespace std;
 
