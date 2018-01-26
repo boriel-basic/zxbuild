@@ -73,4 +73,9 @@ rm -rf zxbasic
 
 echo Uploading...
 scp zxbasic-$RELEASE* boriel@boriel.com:/var/www/boriel.com/web/files/zxb
+echo Done!
+echo Download from:
+for i in zxbasic-$RELEASE*; do
+    echo http://boriel.com/files/zxb/$i
+done
 
