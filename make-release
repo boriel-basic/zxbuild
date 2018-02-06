@@ -17,8 +17,8 @@ fi
 cd "$ZXBDIST"
 git fetch origin $BRANCH
 git checkout $BRANCH
-git pull origin $BRANCH
 git checkout version.py
+git pull origin $BRANCH
 cd ..
 
 RELEASE=${2:-$(cat $ZXBDIST/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
@@ -72,10 +72,10 @@ zip -9qr zxbasic-$RELEASE-win32.zip zxbasic
 rm -rf zxbasic
 
 echo Uploading...
-scp zxbasic-$RELEASE* boriel@boriel.com:/var/www/boriel.com/web/files/zxb
+scp zxbasic-$RELEASE{-win32.zip,.tar.gz,.zip} boriel@boriel.com:/var/www/boriel.com/web/files/zxb
 echo Done!
 echo Download from:
-for i in zxbasic-$RELEASE*; do
+for i in zxbasic-$RELEASE{-win32.zip,.tar.gz,.zip}; do
     echo http://boriel.com/files/zxb/$i
 done
 
