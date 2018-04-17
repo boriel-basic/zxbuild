@@ -37,9 +37,11 @@ done
 
 ./zxb.py --version
 cd ..
-rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/__pycache__
+rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/*.egg-info
 find $ZXBDIST -type d -name ".*" -exec rm -rf {} \; 2>/dev/null || true
 find $ZXBDIST -type d -name ".*" -delete
+find $ZXBDIST -type f -name "*.pyc" -delete
+find $ZXBDIST -type d -name "__pycache__" -delete
 
 tar -zcf zxbasic.tar.gz $ZXBDIST
 zip -9qr zxbasic.zip $ZXBDIST
@@ -63,10 +65,10 @@ mv zxbasic.tar.gz zxbasic-$RELEASE.tar.gz
 #rm -rf dist/windows
 
 cd ..
-cp -af win32/* dist/zxbasic
+cp -af win32/* dist/$ZXBDIST
 cd dist
-zip -9qr zxbasic-$RELEASE-win32.zip zxbasic
-rm -rf zxbasic
+zip -9qr zxbasic-$RELEASE-win32.zip $ZXBDIST
+rm -rf $ZXBDIST
 
 echo Uploading...
 scp zxbasic-$RELEASE{-win32.zip,.tar.gz,.zip} boriel@boriel.com:/var/www/boriel.com/web/files/zxb
