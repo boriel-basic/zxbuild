@@ -1,12 +1,9 @@
 #!/bin/bash
 
-BRANCH="$1"
-ZXBDIST=zxbasic
 set -ue
 
-if [[ "$BRANCH" == "" ]]; then
-    BRANCH=$(git symbolic-ref --short HEAD)
-fi
+BRANCH=${1:-master}
+ZXBDIST=zxbasic
 
 echo Creating release on branch $BRANCH
 
