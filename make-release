@@ -5,18 +5,10 @@ set -ue
 BRANCH=${1:-master}
 ZXBDIST=zxbasic
 
-echo Creating release on branch $BRANCH
+echo Creating release on branch ${BRANCH}
 
-if [[ ! -d "$ZXBDIST" ]]; then
-    git clone git@bitbucket.org:zxbasic/zxbasic.git "$ZXBDIST"
-fi
-
-cd "$ZXBDIST"
-git fetch origin $BRANCH
-git checkout $BRANCH
-git checkout version.py
-git pull origin $BRANCH
-cd ..
+rm -rf ${ZXBDIST} dist/${ZXBDIST}
+git clone --depth=1 git@bitbucket.org:zxbasic/zxbasic.git "${ZXBDIST}"
 
 RELEASE=${2:-$(cat $ZXBDIST/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
 echo $RELEASE
