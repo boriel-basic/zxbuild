@@ -8,7 +8,7 @@ ZXBDIST=zxbasic
 echo Creating release on branch ${BRANCH}
 
 rm -rf ${ZXBDIST} dist/${ZXBDIST}
-git clone --depth=1 git@bitbucket.org:zxbasic/zxbasic.git "${ZXBDIST}"
+git clone --depth=1 --branch ${BRANCH} git@bitbucket.org:zxbasic/zxbasic.git "${ZXBDIST}"
 
 RELEASE=${2:-$(cat $ZXBDIST/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
 echo $RELEASE
