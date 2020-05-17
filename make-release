@@ -8,7 +8,7 @@ ZXBDIST=zxbasic
 echo Creating release on branch ${BRANCH}
 
 rm -rf ${ZXBDIST} dist/${ZXBDIST}
-git clone --depth=1 --branch ${BRANCH} git@bitbucket.org:zxbasic/zxbasic.git "${ZXBDIST}"
+git clone --depth=1 --branch ${BRANCH} git@github.com:boriel/zxbasic.git "${ZXBDIST}"
 
 RELEASE=${2:-$(cat $ZXBDIST/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
 echo $RELEASE
@@ -67,6 +67,6 @@ scp zxbasic-$RELEASE{-win32.zip,.tar.gz,.zip} boriel@boriel.com:/var/www/boriel.
 echo Done!
 echo Download from:
 for i in zxbasic-$RELEASE{-win32.zip,.tar.gz,.zip}; do
-    echo http://boriel.com/files/zxb/$i
+    echo http://www.boriel.com/files/zxb/$i
 done
 
