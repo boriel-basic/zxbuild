@@ -29,7 +29,7 @@ done
 
 ./zxb.py --version
 cd ..
-rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/*.egg-info
+rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/*.egg-info $ZXBDIST/doc $ZXBDIST/docs
 find $ZXBDIST -type d -name ".*" -exec rm -rf {} \; 2>/dev/null || true
 find $ZXBDIST -type d -name ".*" -delete
 find $ZXBDIST -type f -name "*.pyc" -delete
@@ -59,6 +59,7 @@ mv zxbasic.tar.gz zxbasic-$RELEASE.tar.gz
 cd ..
 cp -af win32/* dist/$ZXBDIST
 cd dist
+rm -f zxbasic-$RELEASE-win32.zip  # Files in zip are not overwritten?
 zip -9qr zxbasic-$RELEASE-win32.zip $ZXBDIST
 rm -rf $ZXBDIST
 
