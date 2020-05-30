@@ -10,9 +10,9 @@ echo Creating release on branch ${BRANCH}
 rm -rf ${ZXBDIST} dist/${ZXBDIST}
 git clone --depth=1 --branch ${BRANCH} git@github.com:boriel/zxbasic.git "${ZXBDIST}"
 
-RELEASE=${2:-$(cat $ZXBDIST/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
+RELEASE=${2:-$(cat $ZXBDIST/zxb/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
 echo $RELEASE
-echo "VERSION = '$RELEASE'">$ZXBDIST/version.py
+echo "VERSION = '$RELEASE'">$ZXBDIST/zxb/version.py
 
 rsync -au $ZXBDIST dist
 
@@ -27,7 +27,7 @@ for f in $(cat ${MOD_DIR}/MANIFEST); do
     cp -va ${MOD_DIR}/$f .
 done
 
-./zxb.py --version
+./zxbc.py --version
 cd ..
 rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/*.egg-info $ZXBDIST/doc $ZXBDIST/docs
 find $ZXBDIST -type d -name ".*" -exec rm -rf {} \; 2>/dev/null || true
