@@ -12,7 +12,7 @@ git clone --depth=1 --branch ${BRANCH} git@github.com:boriel/zxbasic.git "${ZXBD
 
 RELEASE=${2:-$(cat $ZXBDIST/zxb/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
 echo $RELEASE
-echo "VERSION = '$RELEASE'">$ZXBDIST/zxb/version.py
+echo "VERSION = '$RELEASE'">$ZXBDIST/libzxbc/version.py
 
 rsync -au $ZXBDIST dist
 
@@ -29,7 +29,8 @@ done
 
 ./zxbc.py --version
 cd ..
-rm -rf $ZXBDIST/tests $ZXBDIST/scratch $ZXBDIST/.git $ZXBDIST/*.spec $ZXBDIST/*.egg-info $ZXBDIST/doc $ZXBDIST/docs
+rm -rf $ZXBDIST/{tests,scratch,.[a-z]*,*.spec,*.egg-info,doc,docs,*.lock,*.toml}
+
 find $ZXBDIST -type d -name ".*" -exec rm -rf {} \; 2>/dev/null || true
 find $ZXBDIST -type d -name ".*" -delete
 find $ZXBDIST -type f -name "*.pyc" -delete
@@ -38,36 +39,27 @@ find $ZXBDIST -type d -name "__pycache__" -delete
 tar -zcf zxbasic.tar.gz $ZXBDIST
 zip -9qr zxbasic.zip $ZXBDIST
 
+# Package generic archives
 mv zxbasic.zip zxbasic-$RELEASE.zip
 mv zxbasic.tar.gz zxbasic-$RELEASE.tar.gz
 
-#cd ../$ZXBDIST
-#docker run -v "$(pwd):/src/" cdrx/pyinstaller-windows 
-#cd ..
-#mv $ZXBDIST/dist/windows dist
-#cp dist/windows/zxb{asm,pp}/*.exe dist/windows/zxb
-#mv dist/zxbasic/{parsetab,library*,examples} dist/windows/zxb
-#rm -rf dist/zxbasic
-#mv dist/windows/zxb dist/windows/zxbasic
-
-#pushd dist/windows
-#zip -9qr zxbasic-$RELEASE-win32.zip zxbasic
-#popd
-#mv -f dist/windows/zxbasic-$RELEASE-win32.zip dist
-#rm -rf dist/windows
-
-cd ..
-cp -af win32/* dist/$ZXBDIST
-cd dist
+# Package win32 version
+cp -af ../win32/* $ZXBDIST
 rm -f zxbasic-$RELEASE-win32.zip  # Files in zip are not overwritten?
 zip -9qr zxbasic-$RELEASE-win32.zip $ZXBDIST
 rm -rf $ZXBDIST
 
+# Package linux64 version
+tar -zxf zxbasic-$RELEASE.tar.gz
+cp -af ../linux64/* $ZXBDIST
+tar -zcf zxbasic-$RELEASE-linux64.tar.gz $ZXBDIST
+rm -rf $ZXBDIST
+
 echo Uploading...
-scp zxbasic-$RELEASE{-win32.zip,.tar.gz,.zip} boriel@boriel.com:/var/www/boriel.com/web/files/zxb
+scp zxbasic-$RELEASE* boriel@boriel.com:/var/www/boriel.com/web/files/zxb
 echo Done!
 echo Download from:
-for i in zxbasic-$RELEASE{-win32.zip,.tar.gz,.zip}; do
+for i in zxbasic-$RELEASE*; do
     echo http://www.boriel.com/files/zxb/$i
 done
 
