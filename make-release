@@ -62,10 +62,10 @@ tar -zcf zxbasic-$RELEASE-macos.tar.gz $ZXBDIST
 rm -rf $ZXBDIST
 
 echo Uploading...
-scp zxbasic-$RELEASE* boriel@boriel.com:/var/www/boriel.com/web/files/zxb
+scp zxbasic-$RELEASE.* zxbasic-$RELEASE-{win32,linux64,macos}.* boriel@boriel.com:/var/www/boriel.com/web/files/zxb
 echo Done!
 echo Download from:
-for i in zxbasic-$RELEASE*; do
+for i in zxbasic-$RELEASE.* zxbasic-$RELEASE-{win32,linux64,macos}.*; do
     echo http://www.boriel.com/files/zxb/$i
 done
 
