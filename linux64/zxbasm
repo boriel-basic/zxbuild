@@ -4,6 +4,6 @@ DIR=$(cd $(dirname $0) && pwd)
 NAME=$(basename $0)
 PYTHON=$DIR/python/*
 
-$PYTHON "${NAME}.py" "$@"
+$PYTHON "${DIR}/${NAME}.py" "$@"
 
 
