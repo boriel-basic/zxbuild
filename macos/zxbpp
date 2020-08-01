@@ -1,9 +1,10 @@
 #!/bin/sh
 
-DIR=$(cd $(dirname $0) && pwd)
-NAME=$(basename $0)
-PYTHON=$DIR/python/bin/python
+DIR="$(cd $(dirname $0) && pwd)"
+NAME="$(basename $0)"
+PYTHON="$DIR/python/bin/python"
+export DYLD_FALLBACK_LIBRARY_PATH="$DIR/python/lib"
 
-$PYTHON "${DIR}/${NAME}.py" "$@"
+"$PYTHON" "${DIR}/${NAME}.py" "$@"
 
 
