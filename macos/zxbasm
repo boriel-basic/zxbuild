@@ -1,10 +1,6 @@
 #!/bin/sh
 
+(/usr/bin/env python3 --version 2>&1) 1>/dev/null || echo "Unable to find Python 3.10+. Cannot continue"
 DIR="$(cd $(dirname $0) && pwd)"
 NAME="$(basename $0)"
-PYTHON="$DIR/python/bin/python"
-export DYLD_FALLBACK_LIBRARY_PATH="$DIR/python/lib"
-
-"$PYTHON" "${DIR}/${NAME}.py" "$@"
-
-
+"${DIR}/${NAME}.py" "$@"
