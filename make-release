@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -ue
+export COPYFILE_DISABLE=true
 
 BRANCH=${1:-master}
 ZXBDIST=zxbasic
