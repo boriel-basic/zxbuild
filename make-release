@@ -3,7 +3,7 @@
 set -ue
 export COPYFILE_DISABLE=true
 
-BRANCH=${1:-master}
+BRANCH=${1:-main}
 ZXBDIST=zxbasic
 
 echo Creating release on branch ${BRANCH}
