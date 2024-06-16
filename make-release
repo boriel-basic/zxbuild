@@ -5,11 +5,12 @@ export COPYFILE_DISABLE=true
 
 BRANCH=${1:-main}
 ZXBDIST=zxbasic
+REPO_URL=git@github.com:boriel-basic/zxbasic.git
 
 echo Creating release on branch ${BRANCH}
 
 rm -rf ${ZXBDIST} dist/${ZXBDIST}
-git clone --depth=1 --branch ${BRANCH} git@github.com:boriel/zxbasic.git "${ZXBDIST}"
+git clone --depth=1 --branch ${BRANCH} ${REPO_URL} "${ZXBDIST}"
 
 RELEASE=${2:-$(cat $ZXBDIST/src/zxbc/version.py|sed -e 's/^[^0-9]*//'|sed -e 's/[^0-9]*$//')}
 echo $RELEASE
