@@ -1,6 +1,0 @@
-#!/bin/sh
-
-(/usr/bin/env python3 --version 2>&1) 1>/dev/null || echo "Unable to find Python 3.10+. Cannot continue"
-DIR="$(cd $(dirname $0) && pwd)"
-NAME="$(basename $0)"
-"${DIR}/${NAME}.py" "$@"

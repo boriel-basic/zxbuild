@@ -1,9 +1,0 @@
-#!/bin/sh
-
-DIR=$(cd $(dirname $0) && pwd)
-NAME=$(basename $0)
-PYTHON=$(ls "$DIR"/python/* | head -1)
-
-$PYTHON "${DIR}/${NAME}.py" "$@"
-
-
