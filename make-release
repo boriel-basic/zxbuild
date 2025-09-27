@@ -7,6 +7,7 @@ BRANCH=${1:-main}
 ZXBDIST=zxbasic
 REPO_URL=git@github.com:boriel-basic/zxbasic.git
 ZXVERSION_FILE=$ZXBDIST/src/zxbc/version.py
+UPLOAD_DIR=/mnt/data01/old-boriel.com/blog/files/zxb
 
 echo Creating release on branch ${BRANCH}
 
@@ -65,7 +66,7 @@ tar -zcf zxbasic-$RELEASE-macos.tar.gz $ZXBDIST
 rm -rf $ZXBDIST
 
 echo Uploading...
-scp zxbasic-$RELEASE.* zxbasic-$RELEASE-{win32,linux64,macos}.* boriel@boriel.com:/var/www/boriel.com/web/files/zxb
+scp zxbasic-$RELEASE.* zxbasic-$RELEASE-{win32,linux64,macos}.* boriel@boriel.com:$UPLOAD_DIR
 echo Done!
 echo Download from:
 for i in zxbasic-$RELEASE.* zxbasic-$RELEASE-{win32,linux64,macos}.*; do
