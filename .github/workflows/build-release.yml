@@ -21,5 +21,6 @@ jobs:
       - name: Build release
         env:
           REPO_URL: ${{ vars.REPO_URL }}
+          UPLOAD: "no"
         run: |
           ./make-release ${{ github.event.inputs.branch }} ${{ github.event.inputs.version }}
