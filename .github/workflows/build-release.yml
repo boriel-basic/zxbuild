@@ -1,0 +1,23 @@
+name: build-release.yml
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g. v1.18.7-beta1)'
+        required: true
+
+      branch:
+        description: 'Branch to release from (e.g. main)'
+        required: true
+        default: 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build release
+        run: |
+          ./make-release ${{ github.event.inputs.branch }} ${{ github.event.inputs.version }}
