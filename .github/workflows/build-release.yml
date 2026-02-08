@@ -24,3 +24,21 @@ jobs:
           UPLOAD: "no"
         run: |
           ./make-release ${{ github.event.inputs.branch }} ${{ github.event.inputs.version }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boriel-basic-win-x32
+          path: dist/zxbasic-${{ github.event.inputs.version }}-win32.zip
+          retention-days: 90
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boriel-basic-linux-x64
+          path: dist/zxbasic-${{ github.event.inputs.version }}-linux64.tar.gz
+          retention-days: 90
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boriel-basic-macos
+          path: dist/zxbasic-${{ github.event.inputs.version }}-macos.tar.gz
+          retention-days: 90
