@@ -1,4 +1,4 @@
-name: build-release.yml
+name: Build Release
 on:
   workflow_dispatch:
     inputs:
@@ -19,5 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build release
+        env:
+          REPO_URL: ${{ vars.REPO_URL }}
         run: |
           ./make-release ${{ github.event.inputs.branch }} ${{ github.event.inputs.version }}
